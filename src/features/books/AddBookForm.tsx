@@ -10,7 +10,6 @@ export default function AddBookForm() {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
 
-  // Pre-fill form when editing
   useEffect(() => {
     if (editingBook) {
       setTitle(editingBook.title);

@@ -4,11 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../../store/store';
 import {
     deleteBook,
-    editBook,
     toggleStatus,
     setEditingBook,
 } from '../../store/bookSlice';
-import type { Book } from '../../types/Book';
 import AddBookForm from './AddBookForm';
 
 export default function BookList() {
@@ -16,33 +14,9 @@ export default function BookList() {
     const books = useSelector((state: RootState) => state.books.books);
 
     const [filter, setFilter] = useState<'all' | 'read' | 'unread'>('all');
-    const [editingBookId, setEditingBookId] = useState<string | null>(null);
-    const [editTitle, setEditTitle] = useState('');
-    const [editAuthor, setEditAuthor] = useState('');
 
     const filteredBooks =
         filter === 'all' ? books : books.filter((book) => book.status === filter);
-
-    const startEdit = (book: Book) => {
-        setEditingBookId(book.id);
-        setEditTitle(book.title);
-        setEditAuthor(book.author);
-    };
-
-    const saveEdit = () => {
-        if (editingBookId) {
-            dispatch(editBook({ id: editingBookId, title: editTitle, author: editAuthor }));
-            setEditingBookId(null);
-            setEditTitle('');
-            setEditAuthor('');
-        }
-    };
-
-    const cancelEdit = () => {
-        setEditingBookId(null);
-        setEditTitle('');
-        setEditAuthor('');
-    };
 
     return (
         <div className="min-h-screen bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-white p-4">
